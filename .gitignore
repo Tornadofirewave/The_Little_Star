@@ -1,0 +1,14 @@
+.vs
+.vscode
+/.claude
+Library
+Logs
+Temp
+obj
+Build
+Builds
+MemoryCaptures
+UserSettings
+nul
+*.csproj
+*.sln
