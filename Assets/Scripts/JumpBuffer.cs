@@ -19,7 +19,8 @@ public class JumpBuffer : MonoBehaviour
 
     private void Update()
     {
-        if (Variables.Object(gameObject).Get<bool>("InDialogue")) return;
+        var objVars = Variables.Object(gameObject);
+        if (objVars.IsDefined("InDialogue") && objVars.Get<bool>("InDialogue")) return;
 
         int mode = Variables.Graph(graphRef).Get<int>("MovementMode");
 
