@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 1432987770}
   - component: {fileID: 1432987775}
   - component: {fileID: 1432987776}
+  - component: {fileID: 1432987777}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -250,7 +251,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 5
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -260,7 +261,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &1432987771
 CapsuleCollider2D:
@@ -271,7 +272,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 1432987769}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: bd1ba7863a8cb2c48a77e3405eba2678, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -343,7 +344,7 @@ MonoBehaviour:
   _data:
     _json: '{"nest":{"source":"Macro","macro":0,"embed":null}}'
     _objectReferences:
-    - {fileID: 11400000, guid: 078306c212e21784293e45cfa6d71fea, type: 2}
+    - {fileID: 11400000, guid: d382c353cd0e11a418fbe171efd17f6a, type: 2}
 --- !u!212 &1432987776
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -396,6 +397,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1432987777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432987769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c0f1b30132053b47a261838ba1b78f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  starPrefab: {fileID: 769593201583629582, guid: 9f341b59e2846cb4484865519fe9c48c, type: 3}
+  throwSpeedX: 8
+  throwSpeedY: 10
+  spawnOffset: {x: 0.5, y: 0.5}
+  throwCooldown: 0.5
 --- !u!1 &1658448385
 GameObject:
   m_ObjectHideFlags: 0
