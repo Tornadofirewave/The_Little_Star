@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class StarThrower : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class StarThrower : MonoBehaviour
 
     private void Update()
     {
+        if (Variables.Object(gameObject).Get<bool>("InDialogue")) return;
+
         float h = Input.GetAxis("Horizontal");
         if (h != 0f)
             facingDirection = h > 0f ? 1 : -1;
@@ -22,7 +25,7 @@ public class StarThrower : MonoBehaviour
         if (cooldownTimer > 0f)
             cooldownTimer -= Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Z) && cooldownTimer <= 0f)
+        if (Input.GetKeyDown(KeyCode.X) && cooldownTimer <= 0f)
             ThrowStar();
     }
 
