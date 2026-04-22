@@ -10,6 +10,8 @@ public class StarThrower : MonoBehaviour
     [SerializeField] private Vector2 spawnOffset = new Vector2(0.5f, 0.5f);
     [SerializeField] private float throwCooldown = 0.5f;
 
+    [HideInInspector] public bool canThrow = false;
+
     private int facingDirection = 1;
     private float cooldownTimer = 0f;
     private readonly List<Collider2D> activeStars = new List<Collider2D>();
@@ -18,6 +20,7 @@ public class StarThrower : MonoBehaviour
     {
         var objVars = Variables.Object(gameObject);
         if (objVars.IsDefined("InDialogue") && objVars.Get<bool>("InDialogue")) return;
+        if (!canThrow) return;
 
         float h = Input.GetAxis("Horizontal");
         if (h != 0f)
