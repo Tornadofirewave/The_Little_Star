@@ -402,13 +402,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2049583944725512798, guid: a088e813635582544b1441ac589c1d4d, type: 3}
+      propertyPath: destroyAtX
+      value: -5
+      objectReference: {fileID: 0}
     - target: {fileID: 5484256826072251904, guid: a088e813635582544b1441ac589c1d4d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.9560938
+      value: 10.14
       objectReference: {fileID: 0}
     - target: {fileID: 5484256826072251904, guid: a088e813635582544b1441ac589c1d4d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.0326524
+      value: -3.28
       objectReference: {fileID: 0}
     - target: {fileID: 5484256826072251904, guid: a088e813635582544b1441ac589c1d4d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -858,7 +862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   director: {fileID: 1378576176}
-  backgroundAsset: {fileID: 0}
+  backgroundAsset: {fileID: 1195912239}
 --- !u!61 &1123990781
 BoxCollider2D:
   m_ObjectHideFlags: 0
