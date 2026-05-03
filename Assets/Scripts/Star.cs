@@ -11,6 +11,13 @@ public class Star : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        collision.collider.GetComponentInParent<InteractButton>()?.TryActivate(ActivatorType.Star);
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        other.GetComponentInParent<InteractButton>()?.TryActivate(ActivatorType.Star);
         Destroy(gameObject);
     }
 }
