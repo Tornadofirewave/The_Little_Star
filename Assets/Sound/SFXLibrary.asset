@@ -21,3 +21,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 4bc809bdfb9ad3545aca3af5bb2256df, type: 3}
     volume: 0.25
     pitchRange: {x: 1, y: 1}
+  - id: star_impact
+    clip: {fileID: 8300000, guid: 3a83ddd15755dd2499ae4badbfc62ea5, type: 3}
+    volume: 0.25
+    pitchRange: {x: 1, y: 1}
