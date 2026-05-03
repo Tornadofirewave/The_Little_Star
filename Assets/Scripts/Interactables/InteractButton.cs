@@ -8,6 +8,7 @@ public class InteractButton : MonoBehaviour
     [SerializeField] private string pressSfxId = "button_press";
 
     [Header("Visuals")]
+    [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer visual;
     [SerializeField] private Sprite pressedSprite;
     [SerializeField] private Vector3 pressedOffset;
@@ -38,10 +39,15 @@ public class InteractButton : MonoBehaviour
     {
         IsActivated = true;
 
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+
         if (AudioManager.Instance != null)
             AudioManager.Instance.Play(pressSfxId);
         else
             Debug.LogWarning("[InteractButton] AudioManager not found in scene.");
+
+        animator?.SetTrigger("Pop");
 
         if (visual != null)
         {

@@ -63,8 +63,7 @@ public class AudioManager : MonoBehaviour
         }
         src.clip = entry.clip;
         src.volume = entry.volume;
-        src.pitch = Random.Range(entry.pitchRange.x, entry.pitchRange.y);
-        Debug.Log($"[AudioManager] Playing '{entry.id}' on {src.name}, clip={entry.clip.name}, vol={src.volume}");
+        src.pitch = Mathf.Max(0.01f, Random.Range(entry.pitchRange.x, entry.pitchRange.y));
     }
 
     private AudioSource GetFreeSource()

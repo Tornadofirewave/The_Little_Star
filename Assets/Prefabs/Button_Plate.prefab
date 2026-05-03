@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8597609692670592903}
   - component: {fileID: 7232918869882092102}
   - component: {fileID: 677895414100482780}
+  - component: {fileID: 7919836703844619114}
   m_Layer: 0
   m_Name: Button_Plate
   m_TagString: Untagged
@@ -145,9 +146,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceptedActivators: 2
   pressSfxId: button_press
+  animator: {fileID: 7919836703844619114}
   visual: {fileID: 8597609692670592903}
   pressedSprite: {fileID: 0}
   pressedOffset: {x: 0, y: 0, z: 0}
   OnActivated:
     m_PersistentCalls:
       m_Calls: []
+--- !u!95 &7919836703844619114
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7285660212128547274}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1dee82a6a9e4d904bb3cf33edd035943, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

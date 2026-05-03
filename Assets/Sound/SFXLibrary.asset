@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0328cfebe94f554a8f1a7468ff9825d, type: 3}
   m_Name: SFXLibrary
   m_EditorClassIdentifier: 
-  entries: []
+  entries:
+  - id: button_press
+    clip: {fileID: 8300000, guid: 8efed1053cadfaf45b5476db92384b6c, type: 3}
+    volume: 0.5
+    pitchRange: {x: 1, y: 1}
+  - id: door_raise
+    clip: {fileID: 8300000, guid: 4bc809bdfb9ad3545aca3af5bb2256df, type: 3}
+    volume: 0.25
+    pitchRange: {x: 1, y: 1}
