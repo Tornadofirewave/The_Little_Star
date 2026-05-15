@@ -1,21 +1,30 @@
-1. Visual Scripting Graph:
-My visual scripting graph is my player movement script. It's primarily comprised of the following sections: Horizontal Movement, Gravity Gate, Rising Gravity, Falling Gravity, Jump Press, Jump Release, Set Velocity, Apex Check, Jump Processing, and Clamp Velocity.
-Horizontal movement checks the input and multiplies a rigidbody by a MoveSpeed variable to get X velocity. Gravity Gate checks a movement mode integer to decide what type of gravity should be applied, rising or falling gravity, providing different gravity forces to make the jump feel snappier downwards.
-Apex Check detects when vertical velocity is past zero, the peak of the jump, to change between gravity modes. Jump press starts the jump, setting vertical velocity and reseting jump timer, a timer that determines how long a player can hold down jump. Jump processing runs while jump is held, incrementing jump timer and adding jump acceleration with vertical velocity, maxing out at a float variable called JumpMaxSpeed, with a duration of another float called MaxJumpDuration.
-Jump release checks if the player lets go of jump early, allowing the player to control how high they jump and have some fun short jumping. Set velocity combines X and Y into a vector, and clamp velocity makes sure the player only falls as fast as a float var called MaxFallSpeed allows them to, with the result being applied to the rigidbody.
+Milestone 2
+Goal: Create a small puzzle system involving "buttons" and doors, where the player will have to interact with button(s) by walking into it or hitting it with the star projectile to open the door.
 
-2. Updated breakdown
-<img width="1026" height="790" alt="image" src="https://github.com/user-attachments/assets/82f441af-b620-4895-9f91-f100ca1ad538" />
+Q.1
+1. Create a button script.
+- Make isActivated bool to check if the button is already pressed
+- Check collision if colliding object is an activator to trigger the button rather than just a random collider.
+- If collider is valid, activate button.
+- Also check if star collider, in which case also activate button.
+- Do some fun stuff, adding animators and sfx.
+2. Create a door script.
+- Create an array that accepts objects that have the button script attached.
+- Check if all isActivated bools in those objects are set to true.
+- If true, lerp door up.
+- If false, door stay.
+- Add sfx for kicks
+3. Create an activator script that allows the player to interact with buttons too. Also adjust star to do the same.
+- Set player type to Activator through a class
+- Set star type to Activator through a class
 
-I updated my breakdown through cutting out tools such as SOs that I found alternative methods of implementing for the scope of this project. This includes the NPCDialogueTrigger.cs script that contains an array for dialogue that each NPC will say. I pursued this because I believed that this was more befitting the scope of this project, and had less overhead than managing an excel spreadsheet with all the present dialogue, and having to reimport said file upon every update.
-I added nodes within my breakdown that represent the two states currently that a player can be in, the exploring and dialogue state. I wasn't sure exactly where to incorporate the player object within this, deciding that it should transition into the exploring state by default since that's how the current build starts. Then, build transitions between the dialogue and exploring state through arrows explaining how transitions occur.
+Q.2
+- It helped a little bit, I'm really used to just doing things first rather than planning them out. I conceptualize then I execute, but it did help planning these on paper first to get a slightly better idea before tackling it.
+- I think something to help my breakdown skills a bit more would be to plan out a bit more on the design aspect rather than just the purely scripting objectives. I did want to make the star arc so it has a bit more of a complicated usage but that might have to be for a future milestone.
 
-The state machine involves two distinct states: dialogue and exploring. 
+Q.3
+- I bridged a visual scripting graph and a normal script because my ground checks weren't sufficient. I ran into a bug, where since my visual scripting graph creates its own physics system and the player has to stop when they touch ground, the side of platforms counted as ground so the player could just stick to walls. That wasn't really my intention however, so I made the movement mode from PlayerMovementv3 an accessible variable onto the GroundCheck.cs script and check the raycast of the platform being checked. I needed to access the movement mode so the player could fall properly, otherwise they'd just be floating when they touch the side of a platform. So I'm basically accessing the variable from the visual scripting graph and changing it with a traditional script to check for ground more effeciently. The script used was GroundCheck.cs and here is a screenshot of the visual scripting graph:
+<img width="1471" height="911" alt="image" src="https://github.com/user-attachments/assets/898cd8c5-6248-4a51-b40a-7f356f869007" />
 
-Exploring allows you to utilize the various abilities and move around freely utilizing a custom-made player movement system inspired by Hollow Knight. 
-It's focused on responsiveness, setting velocity to zero the moment the player lets go of an input, and a sophisticated jump velocity system that allows you to control how much you jump, how easy it is to turn while jumping, and a bit of floatiness once reaching the apex assuming the player is holding down the jump key (Z).
-I thought this would be important to implement to ensure that a 2D platformer allows the player to feel fully in control.
-You are also capable of throwing a star by pressing X once you've walked into the powerup while in the exploration state.
-
-The dialogue state occurs when the player is in front of an NPC interactable object and presses UP. This transitions the player from exploring to dialogue, removing their ability to move, repurposing their jump key to a dialogue progression key.
-Z will progress through an array of dialogue that will display on a UI panel, each press prompting a new line until the array of dialogue is exhausted. Once exhausted, the panel hides itself and returns the player to an exploration state.
+Q.4
+- I do want to use timeline and get more familiar with it. Historically, I made my own cutscene systems but I feel like timeline is a powerful tool that I could use instead or for other aspects such as animation timings for the background.
