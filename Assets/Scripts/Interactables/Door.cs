@@ -9,7 +9,7 @@ public class Door : MonoBehaviour
     [SerializeField] private List<InteractButton> requiredButtons = new();
 
     [Header("Motion")]
-    [SerializeField] private float raiseDistance = 4f;
+    [SerializeField] private Vector2 openOffset = new Vector2(0f, 4f);
     [SerializeField] private float raiseDuration = 1.2f;
     [SerializeField] private AnimationCurve raiseCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
@@ -36,7 +36,7 @@ public class Door : MonoBehaviour
     private void OnButtonActivated()
     {
         if (_raised) return;
-        if (requiredButtons.All(b => b.IsActivated))
+        if (requiredButtons.All(b => b.HasLatchedActivation))
             StartCoroutine(RaiseRoutine());
     }
 
@@ -48,7 +48,7 @@ public class Door : MonoBehaviour
             AudioManager.Instance.Play(raiseSfxId);
 
         Vector3 start = transform.position;
-        Vector3 end = start + Vector3.up * raiseDistance;
+        Vector3 end = start + new Vector3(openOffset.x, openOffset.y, 0f);
         float elapsed = 0f;
 
         while (elapsed < raiseDuration)

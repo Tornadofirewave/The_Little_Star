@@ -15,6 +15,7 @@ public class Star : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player")) return;
         collision.collider.GetComponentInParent<InteractButton>()?.TryActivate(ActivatorType.Star);
+        collision.collider.GetComponentInParent<BubbleBooster>()?.TryActivate(ActivatorType.Star);
         SpawnImpact(transform.position);
         Destroy(gameObject);
     }
@@ -23,6 +24,7 @@ public class Star : MonoBehaviour
     {
         if (other.CompareTag("Player")) return;
         other.GetComponentInParent<InteractButton>()?.TryActivate(ActivatorType.Star);
+        other.GetComponentInParent<BubbleBooster>()?.TryActivate(ActivatorType.Star);
         SpawnImpact(transform.position);
         Destroy(gameObject);
     }

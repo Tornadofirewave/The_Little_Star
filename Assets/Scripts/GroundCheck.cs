@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using Unity.VisualScripting;
 
 public class GroundCheck : MonoBehaviour
 {
+    public static event Action PlayerLandedOnGround;
+
     [SerializeField] private float checkDistance = 0.05f;
     [SerializeField] private LayerMask groundLayer;
 
@@ -23,10 +26,11 @@ public class GroundCheck : MonoBehaviour
         bool grounded = hit && hit.normal.y > 0.5f;
 
         RaycastHit2D ceilingHit = Physics2D.BoxCast(col.bounds.center, new Vector2(col.bounds.size.x * 0.9f, col.bounds.size.y), 0f, Vector2.up, checkDistance, mask);
-        bool hittingCeiling = ceilingHit && ceilingHit.normal.y < -0.5f;
+        bool hittingCeiling = ceilingHit && ceilingHit.normal.y < -0.5f && !IsOneWayPlatform(ceilingHit.collider);
 
         if (grounded && mode == 3)
         {
+            PlayerLandedOnGround?.Invoke();
             Variables.Graph(graphRef).Set("MovementMode", 0);
             Variables.Graph(graphRef).Set("VerticalVelocity", 0f);
         }
@@ -40,5 +44,14 @@ public class GroundCheck : MonoBehaviour
             Variables.Graph(graphRef).Set("MovementMode", 3);
             Variables.Graph(graphRef).Set("VerticalVelocity", 0f);
         }
+    }
+
+    private static bool IsOneWayPlatform(Collider2D target)
+    {
+        if (target == null)
+            return false;
+
+        return target.GetComponent<PlatformEffector2D>() != null ||
+               target.GetComponent<OneWayPlatform>() != null;
     }
 }
