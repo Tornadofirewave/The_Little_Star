@@ -7,5 +7,6 @@ So, instead I made a boost bubble that whenever interacted with by the star or t
 
 [Link](https://tornadofirewave.itch.io/a-little-star-part-3)
 
-For players to understand how to move forward and reach the last level (there are only two levels rn lmao).
+For players to understand how to move forward and reach the last level (there are only two levels rn lmao). (Goal was achieved.)
 
+Make control scheme more intuitive, like key for progressing dialogue and activating dialogue should be the same.
