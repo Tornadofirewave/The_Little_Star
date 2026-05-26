@@ -2,29 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Door : MonoBehaviour
 {
     [Header("Gate")]
     [SerializeField] private List<InteractButton> requiredButtons = new();
 
-    [Header("Motion")]
-    [SerializeField] private Vector2 openOffset = new Vector2(0f, 4f);
-    [SerializeField] private float raiseDuration = 1.2f;
-    [SerializeField] private AnimationCurve raiseCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    [Header("Fade")]
+    [SerializeField] private float fadeDuration = 1.2f;
+    [SerializeField] private AnimationCurve fadeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     [Header("Audio")]
-    [SerializeField] private string raiseSfxId = "door_raise";
+    [SerializeField] private string openSfxId = "door_open";
 
     [Header("Options")]
     [SerializeField] private bool disableColliderWhenOpen = true;
 
-    private bool _raised;
+    private bool _opened;
+    private Tilemap _tilemap;
 
     private void Start()
     {
         foreach (var btn in requiredButtons)
             btn.OnActivated.AddListener(OnButtonActivated);
+
+        _tilemap = GetComponentInChildren<Tilemap>();
     }
 
     private void OnDestroy()
@@ -35,36 +38,36 @@ public class Door : MonoBehaviour
 
     private void OnButtonActivated()
     {
-        if (_raised) return;
+        if (_opened) return;
         if (requiredButtons.All(b => b.HasLatchedActivation))
-            StartCoroutine(RaiseRoutine());
+            StartCoroutine(FadeRoutine());
     }
 
-    private IEnumerator RaiseRoutine()
+    private IEnumerator FadeRoutine()
     {
-        _raised = true;
+        _opened = true;
 
         if (AudioManager.Instance != null)
-            AudioManager.Instance.Play(raiseSfxId);
-
-        Vector3 start = transform.position;
-        Vector3 end = start + new Vector3(openOffset.x, openOffset.y, 0f);
-        float elapsed = 0f;
-
-        while (elapsed < raiseDuration)
-        {
-            elapsed += Time.deltaTime;
-            float t = raiseCurve.Evaluate(Mathf.Clamp01(elapsed / raiseDuration));
-            transform.position = Vector3.LerpUnclamped(start, end, t);
-            yield return null;
-        }
-
-        transform.position = end;
+            AudioManager.Instance.Play(openSfxId);
 
         if (disableColliderWhenOpen)
         {
             var col = GetComponent<Collider2D>();
             if (col != null) col.enabled = false;
         }
+
+        float elapsed = 0f;
+        Color color = _tilemap.color;
+
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            color.a = 1f - fadeCurve.Evaluate(Mathf.Clamp01(elapsed / fadeDuration));
+            _tilemap.color = color;
+            yield return null;
+        }
+
+        color.a = 0f;
+        _tilemap.color = color;
     }
 }

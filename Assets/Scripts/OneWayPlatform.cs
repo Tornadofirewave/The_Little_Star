@@ -1,6 +1,8 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
-[RequireComponent(typeof(BoxCollider2D))]
+// Works with BoxCollider2D (standard platform) or TilemapCollider2D (tilemap platform).
+// Do NOT add CompositeCollider2D to a one-way platform — it is incompatible with PlatformEffector2D.
 public class OneWayPlatform : MonoBehaviour
 {
     [SerializeField] private float surfaceArc = 180f;
@@ -35,15 +37,16 @@ public class OneWayPlatform : MonoBehaviour
 
     private void ConfigureEffector()
     {
-        BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
-        if (boxCollider == null)
-            return;
-
         PlatformEffector2D effector = GetComponent<PlatformEffector2D>();
         if (effector == null)
             return;
 
-        boxCollider.usedByEffector = true;
+        // Apply usedByEffector to whichever collider type is present.
+        var box = GetComponent<BoxCollider2D>();
+        if (box != null) box.usedByEffector = true;
+
+        var tilemap = GetComponent<TilemapCollider2D>();
+        if (tilemap != null) tilemap.usedByEffector = true;
 
         effector.useOneWay = true;
         effector.useOneWayGrouping = useOneWayGrouping;
