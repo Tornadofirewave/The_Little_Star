@@ -8,10 +8,31 @@ public class GameTimer : MonoBehaviour
     private float _elapsed;
     private bool _running;
 
-    private void OnEnable()  => BubbleBooster.OnFirstActivated += StartTimer;
-    private void OnDisable() => BubbleBooster.OnFirstActivated -= StartTimer;
+    private void OnEnable()
+    {
+        BubbleBooster.OnActivated              += HandleBubble;
+        RoomTransitionTrigger.OnPlayerCrossed  += HandleTransition;
+    }
 
-    private void StartTimer() => _running = true;
+    private void OnDisable()
+    {
+        BubbleBooster.OnActivated              -= HandleBubble;
+        RoomTransitionTrigger.OnPlayerCrossed  -= HandleTransition;
+    }
+
+    // First bubble of each level: reset and start.
+    private void HandleBubble()
+    {
+        if (_running) return;
+        _elapsed = 0f;
+        _running = true;
+    }
+
+    // Crossing a transition: pause.
+    private void HandleTransition()
+    {
+        _running = false;
+    }
 
     private void Update()
     {

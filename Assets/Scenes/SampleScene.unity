@@ -955,7 +955,9 @@ PrefabInstance:
       propertyPath: m_TileSpriteArray.Array.data[0].m_RefCount
       value: 4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4187734176198370386, guid: b9adfd7f88f3c174ab0bf54378d0028f, type: 3}
+    - {fileID: 3485894985399314658, guid: b9adfd7f88f3c174ab0bf54378d0028f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

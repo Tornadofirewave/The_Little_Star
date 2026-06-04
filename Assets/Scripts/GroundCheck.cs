@@ -11,6 +11,7 @@ public class GroundCheck : MonoBehaviour
 
     private GraphReference graphRef;
     private Collider2D col;
+    private readonly RaycastHit2D[] castHits = new RaycastHit2D[8];
 
     private void Start()
     {
@@ -22,10 +23,11 @@ public class GroundCheck : MonoBehaviour
     {
         int mode = Variables.Graph(graphRef).Get<int>("MovementMode");
         int mask = groundLayer.value == 0 ? ~0 : (int)groundLayer;
-        RaycastHit2D hit = Physics2D.BoxCast(col.bounds.center, new Vector2(col.bounds.size.x * 0.9f, col.bounds.size.y), 0f, Vector2.down, checkDistance, mask);
+        Vector2 castSize = new Vector2(col.bounds.size.x * 0.9f, col.bounds.size.y);
+        RaycastHit2D hit = BoxCastIgnoringTriggers(Vector2.down, castSize, mask);
         bool grounded = hit && hit.normal.y > 0.5f;
 
-        RaycastHit2D ceilingHit = Physics2D.BoxCast(col.bounds.center, new Vector2(col.bounds.size.x * 0.9f, col.bounds.size.y), 0f, Vector2.up, checkDistance, mask);
+        RaycastHit2D ceilingHit = BoxCastIgnoringTriggers(Vector2.up, castSize, mask);
         bool hittingCeiling = ceilingHit && ceilingHit.normal.y < -0.5f && !IsOneWayPlatform(ceilingHit.collider);
 
         if (grounded && mode == 3)
@@ -44,6 +46,20 @@ public class GroundCheck : MonoBehaviour
             Variables.Graph(graphRef).Set("MovementMode", 3);
             Variables.Graph(graphRef).Set("VerticalVelocity", 0f);
         }
+    }
+
+    private RaycastHit2D BoxCastIgnoringTriggers(Vector2 direction, Vector2 castSize, int mask)
+    {
+        int hitCount = Physics2D.BoxCastNonAlloc(col.bounds.center, castSize, 0f, direction, castHits, checkDistance, mask);
+
+        for (int i = 0; i < hitCount; i++)
+        {
+            Collider2D hitCollider = castHits[i].collider;
+            if (hitCollider != null && !hitCollider.isTrigger)
+                return castHits[i];
+        }
+
+        return default;
     }
 
     private static bool IsOneWayPlatform(Collider2D target)

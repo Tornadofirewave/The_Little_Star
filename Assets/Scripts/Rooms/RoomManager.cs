@@ -5,6 +5,7 @@ public class RoomManager : MonoBehaviour
 {
     public static RoomManager Instance { get; private set; }
 
+
     [SerializeField] private List<Room> rooms = new();
 
     private int _currentIndex = 0;

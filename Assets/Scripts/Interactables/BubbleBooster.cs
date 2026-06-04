@@ -2,11 +2,7 @@ using UnityEngine;
 
 public class BubbleBooster : MonoBehaviour
 {
-    public static event System.Action OnFirstActivated;
-    private static bool _firstFired;
-
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    private static void ResetStaticState() => _firstFired = false;
+    public static event System.Action OnActivated;
 
     [Header("Activation")]
     [SerializeField] private ActivatorType acceptedActivators = ActivatorType.Either;
@@ -65,11 +61,7 @@ public class BubbleBooster : MonoBehaviour
 
     private void Activate(Collider2D sourceCollider, ActivatorType sourceType)
     {
-        if (!_firstFired)
-        {
-            _firstFired = true;
-            OnFirstActivated?.Invoke();
-        }
+        OnActivated?.Invoke();
 
         PlayerLaunchReceiver launchReceiver = ResolveLaunchReceiver(sourceCollider, sourceType);
         if (launchReceiver != null)
