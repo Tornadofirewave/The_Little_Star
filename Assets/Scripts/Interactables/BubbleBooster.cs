@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class BubbleBooster : MonoBehaviour
 {
+    public static event System.Action OnFirstActivated;
+    private static bool _firstFired;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void ResetStaticState() => _firstFired = false;
+
     [Header("Activation")]
     [SerializeField] private ActivatorType acceptedActivators = ActivatorType.Either;
     [SerializeField] private string popSfxId = "button_press";
@@ -59,6 +65,12 @@ public class BubbleBooster : MonoBehaviour
 
     private void Activate(Collider2D sourceCollider, ActivatorType sourceType)
     {
+        if (!_firstFired)
+        {
+            _firstFired = true;
+            OnFirstActivated?.Invoke();
+        }
+
         PlayerLaunchReceiver launchReceiver = ResolveLaunchReceiver(sourceCollider, sourceType);
         if (launchReceiver != null)
             launchReceiver.LaunchUpward(boostSpeed);
